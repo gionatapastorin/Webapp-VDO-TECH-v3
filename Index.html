@@ -1,108 +1,172 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
- <meta charset="utf-8" />
- <title>Vignes d'OR – Equipe Technique</title>
- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
- <link rel="icon" href="?icon=64" type="image/png" sizes="64x64" />
- <link rel="icon" href="?icon=192" type="image/png" sizes="192x192" />
- <link rel="icon" href="?icon=512" type="png" sizes="512x512" />
- <!-- iOS specific: serve icone dallo stesso dominio della web app -->
- <link rel="apple-touch-icon" href="?icon=180" sizes="180x180" />
- <link rel="apple-touch-icon" href="?icon=167" sizes="167x167" />
- <link rel="apple-touch-icon" href="?icon=152" sizes="152x152" />
- <link rel="apple-touch-icon" href="?icon=120" sizes="120x120" />
- <link rel="apple-touch-icon-precomposed" href="?icon=180" />
- <link rel="manifest" href="?manifest=1" />
- <meta name="theme-color" content="#11735D" />
- <meta name="apple-mobile-web-app-capable" content="yes" />
- <meta name="apple-mobile-web-app-title" content="Vignes d'OR" />
- <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
- <?!= HtmlService.createHtmlOutputFromFile('styles').getContent(); ?>
+    <meta charset="utf-8" />
+    <title>Vignes d'OR – Equipe Technique</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <link rel="icon" href="https://script.google.com/macros/s/AKfycbzdMikZRPiZwQqNVvyx3ggP-D4Z0_iqCtnN3c97WoyEh6_W-UbgOWRtDsBO0XSf9jWB8A/exec?icon=64" type="image/png" sizes="64x64" />
+    <link rel="icon" href="https://script.google.com/macros/s/AKfycbzdMikZRPiZwQqNVvyx3ggP-D4Z0_iqCtnN3c97WoyEh6_W-UbgOWRtDsBO0XSf9jWB8A/exec?icon=192" type="image/png" sizes="192x192" />
+    <link rel="icon" href="https://script.google.com/macros/s/AKfycbzdMikZRPiZwQqNVvyx3ggP-D4Z0_iqCtnN3c97WoyEh6_W-UbgOWRtDsBO0XSf9jWB8A/exec?icon=512" type="png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="https://script.google.com/macros/s/AKfycbzdMikZRPiZwQqNVvyx3ggP-D4Z0_iqCtnN3c97WoyEh6_W-UbgOWRtDsBO0XSf9jWB8A/exec?icon=180" sizes="180x180" />
+    <link rel="manifest" href="https://script.google.com/macros/s/AKfycbzdMikZRPiZwQqNVvyx3ggP-D4Z0_iqCtnN3c97WoyEh6_W-UbgOWRtDsBO0XSf9jWB8A/exec?manifest=1" />
+    
+    <meta name="theme-color" content="#11735D" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Vignes d'OR" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
- <header class="welcome">
-   <img src="https://i.ibb.co/gbbRG9Nx/1.png" alt="Icona di un occhio" style="width: 50px; height: 50px;">
-   <h1 class="welcome__title">VIGNES d'OR</h1>
-   <p class="welcome__subtitle">Equipe Technique</p>
- </header>
+    <header class="welcome">
+        <img src="https://i.ibb.co/gbbRG9Nx/1.png" alt="Icona di un occhio" style="width: 50px; height: 50px;">
+        <h1 class="welcome__title">VIGNES d'OR</h1>
+        <p class="welcome__subtitle">Equipe Technique</p>
+    </header>
 
- <!-- Switcher: due pulsanti principali -->
-  <nav id="switcher" class="switcher">
-  <button id="btn-clim" class="switcher__btn is-selected" data-target="view-clim" data-role="clim">
-    <span class="btn__icon">
-      <img class="icon-idle"     src="https://www.noticons.com/icon/DpLb/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Clim - idle">
-      <img class="icon-selected" src="https://www.noticons.com/icon/DpLb/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Clim - selected">
-    </span>
-    <span class="btn__label">Nettoyage Clim</span>
-  </button>
+    <nav id="switcher" class="switcher">
+        <button id="btn-clim" class="switcher__btn is-selected" data-target="view-clim" data-role="clim">
+            <span class="btn__icon">
+                <img class="icon-idle" src="https://www.noticons.com/icon/DpLb/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Clim - idle">
+                <img class="icon-selected" src="https://www.noticons.com/icon/DpLb/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Clim - selected">
+            </span>
+            <span class="btn__label">Nettoyage Clim</span>
+        </button>
 
-  <button id="btn-hiv" class="switcher__btn" data-target="view-hiv" data-role="hiv">
-    <span class="btn__icon">
-      <img class="icon-idle"     src="https://www.noticons.com/icon/xJqj/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Hivernage - idle">
-      <img class="icon-selected" src="https://www.noticons.com/icon/xJqj/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Hivernage - selected">
-    </span>
-    <span class="btn__label">Hivernage MH</span>
-  </button>
+        <button id="btn-hiv" class="switcher__btn" data-target="view-hiv" data-role="hiv">
+            <span class="btn__icon">
+                <img class="icon-idle" src="https://www.noticons.com/icon/xJqj/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Hivernage - idle">
+                <img class="icon-selected" src="https://www.noticons.com/icon/xJqj/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Hivernage - selected">
+            </span>
+            <span class="btn__label">Hivernage MH</span>
+        </button>
 
-  <button id="btn-interv" class="switcher__btn" data-target="view-interv" data-role="interv">
-    <span class="btn__icon">
-      <img class="icon-idle"     src="https://www.noticons.com/icon/nwa9/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Interventions - idle">
-      <img class="icon-selected" src="https://www.noticons.com/icon/nwa9/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Interventions - selected">
-    </span>
-    <span class="btn__label">Interventions</span>
-  </button>
+        <button id="btn-interv" class="switcher__btn" data-target="view-interv" data-role="interv">
+            <span class="btn__icon">
+                <img class="icon-idle" src="https://www.noticons.com/icon/nwa9/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Interventions - idle">
+                <img class="icon-selected" src="https://www.noticons.com/icon/nwa9/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Interventions - selected">
+            </span>
+            <span class="btn__label">Interventions</span>
+        </button>
+    </nav>
 
+    <main class="views" id="views" aria-hidden="true">
+        <section id="view-clim" class="view is-active">
+            <div class="page" id="clim-root">
+                <div id="gsWarn">⚠️ L'application n'a pas pu communiquer avec le serveur. Vérifiez votre connexion internet ou contactez le support.</div>
+                <section class="card" id="mhCard">
+                    <div class="card-header"><h2>MH</h2></div>
+                    <div class="card-content">
+                        <div class="mhRow">
+                            <div class="radios" id="quiRadios" aria-label="Qui">
+                                <label><input type="radio" name="person" value="Alain"> Alain</label>
+                                <label><input type="radio" name="person" value="Vasko"> Vasko</label>
+                            </div>
+                            <select id="mhSelect" aria-label="n° MH" disabled>
+                                <option value="">Chargement…</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                <div class="actions">
+                    <div class="status" id="status">Prêt.</div>
+                    <button class="btn" id="submitBtn" type="button" disabled>Envoyer</button>
+                </div>
+            </div>
+        </section>
 
-   
- </nav>
+        <section id="view-hiv" class="view">
+            <div class="page" id="hiv-root">
+                <section class="card" id="mhCard">
+                    <div class="card-header"><h2>MH</h2></div>
+                    <div class="card-content">
+                        <div class="mhRow">
+                            <div class="radios" id="quiRadios">
+                                <label><input type="radio" name="qui" value="Alain"> Alain</label>
+                                <label><input type="radio" name="qui" value="Vasko"> Vasko</label>
+                            </div>
+                            <select id="mhSelect" aria-label="n° MH">
+                                <option value="">Sélectionnez n° MH…</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+                <section class="card">
+                    <div class="card-header" role="button" tabindex="0" aria-expanded="false" data-target="extContent">
+                        <h2>Extérieur</h2><span class="chev">▾</span>
+                    </div>
+                    <div class="card-content" id="extContent" aria-hidden="true">
+                        <div class="checklist">
+                            <label class="check-item"><input type="checkbox" data-key="ext_gaz"><div><div class="check-title">Gaz</div><div class="check-desc">• Fermer le gaz de la bouteille et la vanne</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="ext_eau"><div><div class="check-title">Eau</div><div class="check-desc">• Fermer et purger le système</div></div></label>
+                        </div>
+                    </div>
+                </section>
+                <section class="card">
+                    <div class="card-header" role="button" tabindex="0" aria-expanded="false" data-target="intContent">
+                        <h2>Intérieur</h2><span class="chev">▾</span>
+                    </div>
+                    <div class="card-content" id="intContent" aria-hidden="true">
+                        <div class="checklist">
+                            <label class="check-item"><input type="checkbox" data-key="int_lv"><div><div class="check-title">Lave-vaisselle</div><div class="check-desc">• Purger l’eau</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="int_piles"><div><div class="check-title">Piles</div><div class="check-desc">• Retirer les piles des télécommandes</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="int_chauffeeau"><div><div class="check-title">Chauffe-eau</div><div class="check-desc">• Vider le réservoir (groupe de sécurité)<br>• Retirer la pince, le bouchon et le filtre<br>• Purger la chaudière<br>• Retirer les piles</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="int_robinets"><div><div class="check-title">Robinets</div><div class="check-desc"><b>Cuisine</b><br>• Ouvrir le robinet<br>• Enlever les brise-jets<br><br><b>Douche(s)</b><br>• Ouvrir le robinet, enlever et poser la pomme de douche au sol<br>• Mettre le joint sur l’étagère<br><br><b>Salle(s) de bain</b><br>• Ouvrir le robinet<br>• Enlever les brise-jets</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="int_siphons"><div><div class="check-title">Siphons</div><div class="check-desc"><b>Cuisine</b><br>• Vider<br>• Mettre de l’antigel<br><br><b>Salle(s) de bain</b><br>• Vider<br>• Mettre de l’antigel<br><br><b>WC</b><br>• Vider le réservoir<br>• Vider le bac<br>• Mettre de l’antigel</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="int_sachets"><div><div class="check-title">Sachets anti-souris</div><div class="check-desc">• x4</div></div></label>
+                            <label class="check-item"><input type="checkbox" data-key="int_absorbeur"><div><div class="check-title">Absorbeur d’humidité</div><div class="check-desc">• Dans l’égouttoir au-dessus du seau</div></div></label>
+                        </div>
+                    </div>
+                </section>
+                <section class="card">
+                    <div class="card-header" role="button" tabindex="0" aria-expanded="false" data-target="elecContent">
+                        <h2>Électricité</h2><span class="chev">▾</span>
+                    </div>
+                    <div class="card-content" id="elecContent" aria-hidden="true">
+                        <div class="checklist">
+                            <label class="check-item"><input type="checkbox" data-key="elec_compteur"><div><div class="check-title">Éteindre le compteur</div><div class="check-desc"></div></div></label>
+                        </div>
+                    </div>
+                </section>
+                <div class="actions">
+                    <div class="status" id="status">Prêt.</div>
+                    <button class="btn" id="resetBtn" type="button">Réinitialiser</button>
+                    <button class="btn" id="submitBtn" type="button" disabled>Enregistrer</button>
+                </div>
+            </div>
+        </section>
 
-  <!-- Contenitore delle view (contenuti originali) -->
-<main class="views" id="views" aria-hidden="true">
-  <section id="view-clim" class="view is-active">
-    <?!= include('view-clim'); ?>
-  </section>
-  <section id="view-hiv" class="view">
-    <?!= include('view-hivernage'); ?>
-  </section>
-  <section id="view-interv" class="view">
-    <!-- Placeholder: puoi sostituire con <?!= include('view-interventions'); ?> quando esiste -->
-    <div class="page">
-      <section class="card">
-        <div class="card-header"><h2>Interventions</h2></div>
-        <div class="card-content open" aria-hidden="false">
-          <p style="margin:0">En cours… (la vue Interventions sera disponible bientôt)</p>
+        <section id="view-interv" class="view">
+            <div class="page">
+                <section class="card">
+                    <div class="card-header"><h2>Interventions</h2></div>
+                    <div class="card-content open" aria-hidden="false">
+                        <p style="margin:0">En cours… (la vue Interventions sera disponible bientôt)</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <section class="login card" id="loginSection">
+        <div id="loginBox" style="padding:12px;">
+            <label for="accessCode" style="display:block; font-weight:700; margin-bottom:6px; color:#11735D;">Accès Technique</label>
+            <div style="display:flex; gap:8px;">
+                <input id="accessCode" type="text" placeholder="Entrez votre code" style="flex:1; padding:12px; border:2px solid #11735D; border-radius:12px; font-size:16px;">
+                <button id="btnLogin" class="btn" type="button">Entrer</button>
+            </div>
+            <div id="loginStatus" class="status" style="margin-top:8px;"></div>
         </div>
-      </section>
-    </div>
-  </section>
-</main>
+        <div id="userBox" style="display:none; padding:12px;">
+            <div class="status">Connecté en tant que <b id="userName"></b> <small id="userRole" style="opacity:.8;"></small></div>
+            <div style="display:flex; gap:8px; align-items:center; margin-top:12px;">
+                <button id="btnLogout" class="btn-logout" type="button">Déconnexion</button>
+            </div>
+        </div>
+    </section>
 
- <!-- LOGIN / UTENTE (SPOSTATO QUI IN FONDO) -->
- <section class="login card" id="loginSection">
-   <div id="loginBox" style="padding:12px;">
-     <!-- TESTO TRADOTTO -->
-     <label for="accessCode" style="display:block; font-weight:700; margin-bottom:6px; color:#11735D;">Accès Technique</label>
-     <div style="display:flex; gap:8px;">
-       <input id="accessCode" type="text" placeholder="Entrez votre code"
-             style="flex:1; padding:12px; border:2px solid #11735D; border-radius:12px; font-size:16px;">
-       <!-- PULSANTE TRADOTTO -->
-       <button id="btnLogin" class="btn" type="button">Entrer</button>
-     </div>
-     <div id="loginStatus" class="status" style="margin-top:8px;"></div>
-   </div>
-
-   <div id="userBox" style="display:none; padding:12px;">
-     <!-- TESTO TRADOTTO -->
-     <div class="status">Connecté en tant que <b id="userName"></b> <small id="userRole" style="opacity:.8;"></small></div>
-     <div style="display:flex; gap:8px; align-items:center; margin-top:12px;">
-       <!-- PULSANTE TRADOTTO -->
-       <button id="btnLogout" class="btn-logout" type="button">Déconnexion</button>
-     </div>
-   </div>
- </section>
-
-
- <?!= HtmlService.createHtmlOutputFromFile('app').getContent(); ?>
+    <script src="app.js"></script>
 </body>
 </html>
