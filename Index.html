@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+ <meta charset="utf-8" />
+ <title>Vignes d'OR – Equipe Technique</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+ <link rel="icon" href="?icon=64" type="image/png" sizes="64x64" />
+ <link rel="icon" href="?icon=192" type="image/png" sizes="192x192" />
+ <link rel="icon" href="?icon=512" type="png" sizes="512x512" />
+ <!-- iOS specific: serve icone dallo stesso dominio della web app -->
+ <link rel="apple-touch-icon" href="?icon=180" sizes="180x180" />
+ <link rel="apple-touch-icon" href="?icon=167" sizes="167x167" />
+ <link rel="apple-touch-icon" href="?icon=152" sizes="152x152" />
+ <link rel="apple-touch-icon" href="?icon=120" sizes="120x120" />
+ <link rel="apple-touch-icon-precomposed" href="?icon=180" />
+ <link rel="manifest" href="?manifest=1" />
+ <meta name="theme-color" content="#11735D" />
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+ <meta name="apple-mobile-web-app-title" content="Vignes d'OR" />
+ <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+ <?!= HtmlService.createHtmlOutputFromFile('styles').getContent(); ?>
+</head>
+<body>
+ <header class="welcome">
+   <img src="https://i.ibb.co/gbbRG9Nx/1.png" alt="Icona di un occhio" style="width: 50px; height: 50px;">
+   <h1 class="welcome__title">VIGNES d'OR</h1>
+   <p class="welcome__subtitle">Equipe Technique</p>
+ </header>
+
+ <!-- Switcher: due pulsanti principali -->
+  <nav id="switcher" class="switcher">
+  <button id="btn-clim" class="switcher__btn is-selected" data-target="view-clim" data-role="clim">
+    <span class="btn__icon">
+      <img class="icon-idle"     src="https://www.noticons.com/icon/DpLb/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Clim - idle">
+      <img class="icon-selected" src="https://www.noticons.com/icon/DpLb/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Clim - selected">
+    </span>
+    <span class="btn__label">Nettoyage Clim</span>
+  </button>
+
+  <button id="btn-hiv" class="switcher__btn" data-target="view-hiv" data-role="hiv">
+    <span class="btn__icon">
+      <img class="icon-idle"     src="https://www.noticons.com/icon/xJqj/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Hivernage - idle">
+      <img class="icon-selected" src="https://www.noticons.com/icon/xJqj/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Hivernage - selected">
+    </span>
+    <span class="btn__label">Hivernage MH</span>
+  </button>
+
+  <button id="btn-interv" class="switcher__btn" data-target="view-interv" data-role="interv">
+    <span class="btn__icon">
+      <img class="icon-idle"     src="https://www.noticons.com/icon/nwa9/11735D/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Interventions - idle">
+      <img class="icon-selected" src="https://www.noticons.com/icon/nwa9/D4EDBC/FFFEFE00.svg" width="22" height="22" loading="eager" decoding="async" alt="Interventions - selected">
+    </span>
+    <span class="btn__label">Interventions</span>
+  </button>
+
+
+   
+ </nav>
+
+  <!-- Contenitore delle view (contenuti originali) -->
+<main class="views" id="views" aria-hidden="true">
+  <section id="view-clim" class="view is-active">
+    <?!= include('view-clim'); ?>
+  </section>
+  <section id="view-hiv" class="view">
+    <?!= include('view-hivernage'); ?>
+  </section>
+  <section id="view-interv" class="view">
+    <!-- Placeholder: puoi sostituire con <?!= include('view-interventions'); ?> quando esiste -->
+    <div class="page">
+      <section class="card">
+        <div class="card-header"><h2>Interventions</h2></div>
+        <div class="card-content open" aria-hidden="false">
+          <p style="margin:0">En cours… (la vue Interventions sera disponible bientôt)</p>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+ <!-- LOGIN / UTENTE (SPOSTATO QUI IN FONDO) -->
+ <section class="login card" id="loginSection">
+   <div id="loginBox" style="padding:12px;">
+     <!-- TESTO TRADOTTO -->
+     <label for="accessCode" style="display:block; font-weight:700; margin-bottom:6px; color:#11735D;">Accès Technique</label>
+     <div style="display:flex; gap:8px;">
+       <input id="accessCode" type="text" placeholder="Entrez votre code"
+             style="flex:1; padding:12px; border:2px solid #11735D; border-radius:12px; font-size:16px;">
+       <!-- PULSANTE TRADOTTO -->
+       <button id="btnLogin" class="btn" type="button">Entrer</button>
+     </div>
+     <div id="loginStatus" class="status" style="margin-top:8px;"></div>
+   </div>
+
+   <div id="userBox" style="display:none; padding:12px;">
+     <!-- TESTO TRADOTTO -->
+     <div class="status">Connecté en tant que <b id="userName"></b> <small id="userRole" style="opacity:.8;"></small></div>
+     <div style="display:flex; gap:8px; align-items:center; margin-top:12px;">
+       <!-- PULSANTE TRADOTTO -->
+       <button id="btnLogout" class="btn-logout" type="button">Déconnexion</button>
+     </div>
+   </div>
+ </section>
+
+
+ <?!= HtmlService.createHtmlOutputFromFile('app').getContent(); ?>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!-- Contenuto HIVERNAGE aggiornato -->
+<div class="page" id="hiv-root">
+
+  <!-- MH -->
+  <section class="card" id="mhCard">
+    <div class="card-header"><h2>MH</h2></div>
+    <div class="card-content">
+      <div class="mhRow">
+        <!-- Radios facoltativi (per lavoro senza login) -->
+        <div class="radios" id="quiRadios">
+          <label><input type="radio" name="qui" value="Alain"> Alain</label>
+          <label><input type="radio" name="qui" value="Vasko"> Vasko</label>
+        </div>
+        <!-- Select MH -->
+        <select id="mhSelect" aria-label="n° MH">
+          <option value="">Sélectionnez n° MH…</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Extérieur -->
+  <section class="card">
+    <div class="card-header" role="button" tabindex="0" aria-expanded="false" data-target="extContent">
+      <h2>Extérieur</h2><span class="chev">▾</span>
+    </div>
+    <div class="card-content" id="extContent" aria-hidden="true">
+      <div class="checklist">
+        <label class="check-item">
+          <input type="checkbox" data-key="ext_gaz">
+          <div>
+            <div class="check-title">Gaz</div>
+            <div class="check-desc">• Fermer le gaz de la bouteille et la vanne</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="ext_eau">
+          <div>
+            <div class="check-title">Eau</div>
+            <div class="check-desc">• Fermer et purger le système</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intérieur -->
+  <section class="card">
+    <div class="card-header" role="button" tabindex="0" aria-expanded="false" data-target="intContent">
+      <h2>Intérieur</h2><span class="chev">▾</span>
+    </div>
+    <div class="card-content" id="intContent" aria-hidden="true">
+      <div class="checklist">
+        <label class="check-item">
+          <input type="checkbox" data-key="int_lv">
+          <div>
+            <div class="check-title">Lave-vaisselle</div>
+            <div class="check-desc">• Purger l’eau</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="int_piles">
+          <div>
+            <div class="check-title">Piles</div>
+            <div class="check-desc">• Retirer les piles des télécommandes</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="int_chauffeeau">
+          <div>
+            <div class="check-title">Chauffe-eau</div>
+            <div class="check-desc">• Vider le réservoir (groupe de sécurité)<br>• Retirer la pince, le bouchon et le filtre<br>• Purger la chaudière<br>• Retirer les piles</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="int_robinets">
+          <div>
+            <div class="check-title">Robinets</div>
+            <div class="check-desc"><b>Cuisine</b><br>• Ouvrir le robinet<br>• Enlever les brise-jets<br><br><b>Douche(s)</b><br>• Ouvrir le robinet, enlever et poser la pomme de douche au sol<br>• Mettre le joint sur l’étagère<br><br><b>Salle(s) de bain</b><br>• Ouvrir le robinet<br>• Enlever les brise-jets</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="int_siphons">
+          <div>
+            <div class="check-title">Siphons</div>
+            <div class="check-desc"><b>Cuisine</b><br>• Vider<br>• Mettre de l’antigel<br><br><b>Salle(s) de bain</b><br>• Vider<br>• Mettre de l’antigel<br><br><b>WC</b><br>• Vider le réservoir<br>• Vider le bac<br>• Mettre de l’antigel</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="int_sachets">
+          <div>
+            <div class="check-title">Sachets anti-souris</div>
+            <div class="check-desc">• x4</div>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" data-key="int_absorbeur">
+          <div>
+            <div class="check-title">Absorbeur d’humidité</div>
+            <div class="check-desc">• Dans l’égouttoir au-dessus du seau</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Électricité -->
+  <section class="card">
+    <div class="card-header" role="button" tabindex="0" aria-expanded="false" data-target="elecContent">
+      <h2>Électricité</h2><span class="chev">▾</span>
+    </div>
+    <div class="card-content" id="elecContent" aria-hidden="true">
+      <div class="checklist">
+        <label class="check-item">
+          <input type="checkbox" data-key="elec_compteur">
+          <div>
+            <div class="check-title">Éteindre le compteur</div>
+            <div class="check-desc"></div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Azioni -->
+  <div class="actions">
+    <div class="status" id="status">Prêt.</div>
+    <button class="btn" id="resetBtn" type="button">Réinitialiser</button>
+    <button class="btn" id="submitBtn" type="button" disabled>Enregistrer</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const root = document.getElementById('hiv-root');
+  if(!root) return;
+
+  const state = { who:'', mh:'', checks:[] };
+
+  // Se login già presente, imposta who e nascondi i radio
+  if (window.APP && APP.user && APP.user.name) {
+    state.who = APP.user.name;
+    const radios = root.querySelector('#quiRadios');
+    if (radios) radios.style.display = 'none';
+  }
+
+  const statusEl = root.querySelector('#status');
+  const submitEl = root.querySelector('#submitBtn');
+  const resetEl  = root.querySelector('#resetBtn');
+  const mhSelect = root.querySelector('#mhSelect');
+
+  // ✅ Reagisci ai cambi di login/logout
+  document.addEventListener('userchange', (ev)=>{
+    const u = ev.detail && ev.detail.user;
+    state.who = (u && u.name) ? u.name : '';
+    const radios = root.querySelector('#quiRadios');
+    if (radios) radios.style.display = (u && u.name) ? 'none' : '';
+    validate();
+  });
+
+  // Toggle accordion + scroll
+  root.querySelectorAll('.card-header[role="button"]').forEach(h=>{
+    h.addEventListener('click', ()=>{
+      const target = root.querySelector('#'+h.dataset.target);
+      const wasOpen = target.classList.contains('open');
+
+      root.querySelectorAll('.card-content').forEach(c=>{
+        c.classList.remove('open'); c.setAttribute('aria-hidden','true');
+      });
+      root.querySelectorAll('.card-header[role="button"]').forEach(x=>{
+        x.setAttribute('aria-expanded','false');
+        const ch=x.querySelector('.chev'); if (ch) ch.style.transform='rotate(0deg)';
+      });
+
+      if (!wasOpen) {
+        target.classList.add('open'); target.setAttribute('aria-hidden','false');
+        h.setAttribute('aria-expanded','true');
+        const ch=h.querySelector('.chev'); if (ch) ch.style.transform='rotate(180deg)';
+      }
+      requestAnimationFrame(()=>{ h.scrollIntoView({ behavior:'smooth', block:'start' }); });
+    });
+    h.addEventListener('keydown', e=>{ if (e.key==='Enter'||e.key===' '){ e.preventDefault(); h.click(); } });
+  });
+
+  // Radio "Qui" (facoltativi)
+  root.querySelector('#quiRadios').addEventListener('change', (e)=>{
+    if (e.target && e.target.name === 'qui') { state.who = e.target.value; validate(); }
+  });
+
+  // MH
+  mhSelect.addEventListener('change', ()=>{
+    state.mh = mhSelect.value.trim(); validate();
+  });
+
+  // Checkbox
+  function hookCheckboxes(){
+    const cbs = root.querySelectorAll('.check-item input[type="checkbox"]');
+    state.checks = Array.from(cbs).map(cb => cb.checked);
+    cbs.forEach((cb, idx)=>{
+      cb.addEventListener('change', ()=>{
+        state.checks[idx] = cb.checked; validate();
+      });
+    });
+  }
+
+  // ✅ Validazione senza obbligo radio: serve MH + tutte le spunte
+  function validate(){
+    const mhOk = !!state.mh;
+    const allChecked = state.checks.length > 0 && state.checks.every(v => v === true);
+    submitEl.disabled = !(mhOk && allChecked);
+  }
+
+  function setStatus(msg, ok){
+    statusEl.textContent = msg || '';
+    statusEl.style.color = ok ? '#0b6e4f' : '#9b2226';
+  }
+
+  // Caricamento MH (usa Code.gs → getMHOptions)
+  function loadMH(){
+    if (!(window.google && google.script && google.script.run)) {
+      setStatus('google.script.run indisponible', false); return;
+    }
+    mhSelect.disabled = true;
+    mhSelect.innerHTML = '<option value="">Chargement…</option>';
+    google.script.run
+      .withSuccessHandler(list=>{
+        mhSelect.innerHTML = '<option value="">Sélectionnez n° MH…</option>';
+        (list||[]).forEach(opt=>{
+          const o=document.createElement('option');
+          o.value=opt.value; o.textContent=opt.label; mhSelect.appendChild(o);
+        });
+        mhSelect.disabled = false;
+        if (state.mh) { mhSelect.value = state.mh; if (mhSelect.value !== state.mh) state.mh = ''; }
+        validate();
+      })
+      .withFailureHandler(err=>{
+        console.error(err);
+        mhSelect.disabled=false;
+        setStatus('Erreur chargement MH.', false);
+        validate();
+      })
+      .getMHOptions();
+  }
+
+  // Submit → Code.gs submitHivernage (con fallback nome da login)
+  function handleSubmit(){
+    if (submitEl.disabled) return;
+    submitEl.disabled = true; setStatus('Enregistrement…', true);
+
+    const who = state.who || (window.APP && APP.user && APP.user.name) || '';
+
+    const payload = { qui: who, mh: state.mh, checks: state.checks.slice() };
+    google.script.run
+      .withSuccessHandler(res=>{
+        setStatus(`Enregistré (ligne ${res && res.row ? res.row : '?' }).`, true);
+        loadMH();
+        root.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => cb.checked = false);
+        state.checks = state.checks.map(()=>false);
+        mhSelect.value=''; state.mh='';
+        root.querySelectorAll('.card-content').forEach(c=>{
+          c.classList.remove('open'); c.setAttribute('aria-hidden','true');
+        });
+        root.querySelectorAll('.card-header[role="button"] .chev').forEach(ch=> ch.style.transform='rotate(0deg)');
+        window.scrollTo({ top:0, behavior:'smooth' });
+        validate();
+      })
+      .withFailureHandler(err=>{
+        console.error(err);
+        setStatus('Erreur: ' + (err && err.message ? err.message : err), false);
+        validate();
+      })
+      .submitHivernage(payload);
+  }
+
+  // Reset
+  function resetAll(){
+    root.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => cb.checked = false);
+    state.checks = state.checks.map(()=>false);
+    mhSelect.value=''; state.mh='';
+    root.querySelectorAll('.card-content').forEach(c=>{
+      c.classList.remove('open'); c.setAttribute('aria-hidden','true');
+    });
+    root.querySelectorAll('.card-header[role="button"] .chev').forEach(ch=> ch.style.transform='rotate(0deg)');
+    window.scrollTo({ top:0, behavior:'smooth' });
+    validate();
+  }
+
+  // Init
+  (function init(){
+    const checked = root.querySelector('#quiRadios input[type="radio"]:checked');
+    state.who = checked ? checked.value : state.who;
+    hookCheckboxes(); validate(); loadMH();
+    resetEl.addEventListener('click', resetAll);
+    submitEl.addEventListener('click', handleSubmit);
+  })();
+})();
+</script>

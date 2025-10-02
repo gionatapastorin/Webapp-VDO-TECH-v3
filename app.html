@@ -1,0 +1,218 @@
+<script>
+(function(){
+ const byId = id => document.getElementById(id);
+ const switcher = byId('switcher');
+ const btnClim  = byId('btn-clim');
+ const btnHiv   = byId('btn-hiv');
+ const iconClim = byId('icon-clim');
+ const iconHiv  = byId('icon-hiv');
+ const viewClim = byId('view-clim');
+ const viewHiv  = byId('view-hiv');
+ const btnInterv = byId('btn-interv');
+ const iconInterv = byId('icon-interv');
+ const viewInterv = byId('view-interv');
+
+  const ICONS = {
+    clim:{selected:'https://www.noticons.com/icon/DpLb/D4EDBC/FFFEFE00.svg', idle:'https://www.noticons.com/icon/DpLb/11735D/FFFEFE00.svg'},
+    hiv: {selected:'https://www.noticons.com/icon/xJqj/D4EDBC/FFFEFE00.svg', idle:'https://www.noticons.com/icon/xJqj/11735D/FFFEFE00.svg'},
+    interv:{selected:'https://www.noticons.com/icon/nwa9/D4EDBC/FFFEFE00.svg', idle:'https://www.noticons.com/icon/nwa9/11735D/FFFEFE00.svg'}
+  };
+
+window.APP = window.APP || {};
+ const $ = (sel, root=document) => root.querySelector(sel);
+const views = document.getElementById('views');
+
+ // --- UI login references
+ const loginSection = $('#loginSection');
+ const loginBox = $('#loginBox');
+ const userBox = $('#userBox');
+ const accessCode = $('#accessCode');
+ const btnLogin = $('#btnLogin');
+ const loginStatus = $('#loginStatus');
+ const userNameEl = $('#userName');
+ const userRoleEl = $('#userRole');
+ const btnLogout = $('#btnLogout');
+
+(function preloadIcons(){
+  const srcs = [
+    'https://www.noticons.com/icon/DpLb/11735D/FFFEFE00.svg',
+    'https://www.noticons.com/icon/DpLb/D4EDBC/FFFEFE00.svg',
+    'https://www.noticons.com/icon/xJqj/11735D/FFFEFE00.svg',
+    'https://www.noticons.com/icon/xJqj/D4EDBC/FFFEFE00.svg',
+    'https://www.noticons.com/icon/nwa9/11735D/FFFEFE00.svg',
+    'https://www.noticons.com/icon/nwa9/D4EDBC/FFFEFE00.svg'
+  ];
+  srcs.forEach(s => { const im = new Image(); im.decoding='async'; im.src = s; });
+})();
+ 
+ function setLoginStatus(msg, ok){
+   if(!loginStatus) return;
+   loginStatus.textContent = msg || '';
+   loginStatus.classList.toggle('is-error', ok===false);
+ }
+
+
+ function saveUser(u){
+   try { localStorage.setItem('vdo_user', JSON.stringify(u)); } catch(e){}
+ }
+ function loadUser(){
+   try { return JSON.parse(localStorage.getItem('vdo_user')||'null'); } catch(e){ return null; }
+ }
+ function clearUser(){
+   try { localStorage.removeItem('vdo_user'); } catch(e){}
+ }
+
+
+  function renderUser(){
+    const u = APP.user || null;
+    if (u && u.name){
+      // box utente visibile, login box nascosto
+      if (userNameEl) userNameEl.textContent = u.name;
+      if (userRoleEl) userRoleEl.textContent = u.role ? `(${u.role})` : '';
+      if (loginBox) loginBox.style.display = 'none';
+      if (userBox) userBox.style.display = '';
+
+      // nascondi i radios nelle view (comportamento già previsto)
+      document.querySelectorAll('#clim-root #quiRadios, #hiv-root #quiRadios')
+        .forEach(el => el && (el.style.display='none'));
+
+      // 🔓 mostra i contenuti sotto i due pulsanti
+      if (views) views.setAttribute('aria-hidden','false');
+
+      // avvisa le view che c'è un utente
+      document.dispatchEvent(new CustomEvent('userchange', { detail: { user: u } }));
+      if (btnClim) btnClim.style.display = '';
+      if (btnHiv)  btnHiv.style.display = '';
+      if (btnInterv) btnInterv.style.display = '';   // ✅ nuovo
+
+    } else {
+      if (loginBox) loginBox.style.display = '';
+      if (userBox) userBox.style.display = 'none';
+
+      // ripristina i radios
+      document.querySelectorAll('#clim-root #quiRadios, #hiv-root #quiRadios')
+        .forEach(el => el && (el.style.display=''));
+
+      // 🔒 nascondi TUTTO ciò che sta sotto i due pulsanti
+      if (views) views.setAttribute('aria-hidden','true');
+
+      document.dispatchEvent(new CustomEvent('userchange', { detail: { user: null } }));
+      if (btnClim) btnClim.style.display = 'none';
+      if (btnHiv)  btnHiv.style.display = 'none';
+      if (btnInterv) btnInterv.style.display = 'none';
+    }
+  }
+
+
+
+ function doLogin(){
+   const code = (accessCode && accessCode.value || '').trim();
+   if (!code) { setLoginStatus('Entrez un code', false); return; }
+   if (!(window.google && google.script && google.script.run)){
+     setLoginStatus('Login disponibile solo tramite Web App pubblicata.', false);
+     return;
+   }
+   setLoginStatus('Vérification en cours…');
+
+
+   google.script.run
+     .withSuccessHandler(res => {
+       if (res && res.ok && res.user && res.user.name){
+         APP.user = { name: res.user.name, role: res.user.role || '', code };
+         saveUser(APP.user);
+         setLoginStatus('Accès réussi', true);
+         renderUser();
+       } else {
+         setLoginStatus(res && res.reason ? res.reason : 'Code non valide.', false);
+       }
+     })
+     .withFailureHandler(err => {
+       console.error(err);
+       setLoginStatus('Erreur réseau ou serveur.', false);
+     })
+     .validateAccessCode(code);
+ }
+
+
+ function doLogout(){
+   APP.user = null;
+   clearUser();
+   renderUser();
+ }
+
+
+ // Hook UI
+ if (btnLogin) btnLogin.addEventListener('click', doLogin);
+ if (accessCode) accessCode.addEventListener('keyup', (e)=>{ if(e.key==='Enter') doLogin(); });
+ if (btnLogout) btnLogout.addEventListener('click', doLogout);
+
+
+  // Init from storage + revalidate on server (blocca ruoli non-Technique)
+  const stored = loadUser();
+  if (stored && stored.code && (window.google && google.script && google.script.run)) {
+    setLoginStatus('Vérification en cours…');
+    google.script.run
+      .withSuccessHandler(res => {
+        if (res && res.ok && res.user) {
+          APP.user = { name: res.user.name, role: res.user.role || '', code: stored.code };
+          saveUser(APP.user);
+        } else {
+          clearUser(); APP.user = null;
+          setLoginStatus(res && res.reason ? res.reason : "Accès réservé à l'équipe Technique", false);
+        }
+        renderUser();
+      })
+      .withFailureHandler(() => { clearUser(); APP.user = null; renderUser(); })
+      .validateAccessCode(stored.code);
+  } else {
+    // Nessun utente salvato o non in WebApp → render normale
+    APP.user = (stored && stored.name) ? stored : null;
+    renderUser();
+  }
+
+ renderUser();
+
+
+ // Let views get the user synchronously
+ window.APP = APP;
+
+
+ // OPTIONAL: when switching tabs, re-render radios visibility
+ document.addEventListener('viewchange', renderUser);
+
+
+function setActive(mode){
+  // compattiamo lo switcher quando si sceglie un tab
+  switcher.classList.add('compact');
+
+  const isClim   = mode === 'clim';
+  const isHiv    = mode === 'hiv';
+  const isInterv = mode === 'interv';
+
+  // stato pulsanti
+  btnClim   && btnClim.classList.toggle('is-selected', isClim);
+  btnHiv    && btnHiv.classList.toggle('is-selected', isHiv);
+  btnInterv && btnInterv.classList.toggle('is-selected', isInterv);
+
+  // pillole comprimibili per gli altri
+  btnClim   && btnClim.classList.toggle('is-collapsed', !isClim);
+  btnHiv    && btnHiv.classList.toggle('is-collapsed', !isHiv);
+  btnInterv && btnInterv.classList.toggle('is-collapsed', !isInterv);
+
+  // viste
+  viewClim  && viewClim.classList.toggle('is-active', isClim);
+  viewHiv   && viewHiv.classList.toggle('is-active', isHiv);
+  viewInterv&& viewInterv.classList.toggle('is-active', isInterv);
+
+  // notifica opzionale
+  document.dispatchEvent(new CustomEvent('viewchange', { detail: { view: mode } }));
+}
+
+
+
+  btnClim   && btnClim.addEventListener('click', ()=> setActive('clim'));
+  btnHiv    && btnHiv.addEventListener('click',  ()=> setActive('hiv'));
+  btnInterv && btnInterv.addEventListener('click',()=> setActive('interv'));
+  setActive('hiv');
+})();
+</script>
